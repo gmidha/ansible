@@ -1,0 +1,21 @@
+--- # this playbook installs apache, starts the service, creates index.html and modify index.html
+- hosts: all
+  become: yes
+  tasks:
+  - name: install apache
+    yum:
+      name: httpd
+      state: latest
+  - name: enable and start apache
+    service:
+      name: httpd
+      state: started
+      enabled: yes
+  - name: create index.html file
+    file:
+      path: /var/www/index.html
+      state: touch
+  - name: edit index.html
+    lineinfile:
+      path: /var/www/index.html
+      line: "I am a SRE"
