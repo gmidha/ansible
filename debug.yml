@@ -1,0 +1,15 @@
+--- # this playbook demonstates the usage of register and debug.
+- hosts: all
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: create a temp file
+    file:
+      path: /tmp/newfile
+      state: touch
+    register: output
+  - debug: msg="Our Output is {{ output }}"
+  - name: add uid from output in the file using linefile
+    lineinfile:
+      path: /tmp/newfile
+      line: "{{ output.uid }}"
