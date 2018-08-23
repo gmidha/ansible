@@ -1,0 +1,16 @@
+--- #this playbook demonstates the use of handler with listen
+- hosts: all
+  become: yes
+  become_method: sudo
+  handlers:
+  - name: restart httpd
+    service: name="httpd" state="restarted"
+    listen: restart web
+  tasks:
+  - name: update httpd/conf file
+    replace:
+      path: /etc/httpd/httpd.conf
+      regexp: "^DocumentRoot .*$"
+      replace: 'DocumentRoot "/opt/www"'
+      backup: yes
+    notify: restart web
