@@ -1,0 +1,12 @@
+--- # this yml file demonstrates the example of loops in Ansible
+- hosts: all
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: create a new user
+    user:
+      name: "{{ item }}"
+      state: present
+    with_items:
+    - honey
+    - funny
