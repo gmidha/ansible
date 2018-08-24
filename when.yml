@@ -1,0 +1,11 @@
+--- # this yml file demonstates the usage of conditional. It will use when clause.
+- hosts: all
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: edit index.html
+    lineinfile:
+      path: /var/www/html/index.html
+      line: "I am playing with Ansible"
+    when:
+    - ansible_hostname == "labserver1"
