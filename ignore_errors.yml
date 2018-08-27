@@ -1,0 +1,11 @@
+--- # this yaml ignore errors
+- hosts: all
+  tasks:
+  - name: get index.html
+    get_url:
+      url: "http://{{item}}/index.html"
+      dest: /tmp/{{item}}
+    with_items:
+    - dpgmhe2
+    - dpgmhe3
+    ignore_errors: yes
