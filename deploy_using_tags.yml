@@ -1,0 +1,22 @@
+--- # this yml file demonstrates the usage of tags for deployments -- usage: ansible-playbook deploy_using_tags.yml --tags webdeploy
+- hosts: webservers
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: copy a file
+      copy:
+        src: /home/ansible/ansible/playbooks/scripts/index.sh
+        dest: /home/ansible/index.sh
+      tags:
+        - webdeploy
+
+- hosts: dbservers
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: deploy sql script
+      copy:
+        src: /home/ansible/ansible/playbooks/scripts/db.sql
+        dest: /home/ansible/db.sql
+      tags:
+        - dbdeploy
