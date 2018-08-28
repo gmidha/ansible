@@ -1,0 +1,14 @@
+--- # this file demonstrates the usage of block, rescue and always that is error handling.
+- hosts: all
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: using block, rescue and always
+      block:
+        - get_url:
+            url: http://labserver/index.html
+            dest: /tmp/index.html
+      rescue:
+        - debug: msg="The file doesnt exists"
+      always:
+        - debug: msg="This is Ansible Playbook"
