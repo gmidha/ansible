@@ -1,0 +1,9 @@
+--- # this yaml file deploys file using a template network.j2 file.
+- hosts: all
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: deploy a new file using template
+    template:
+      src: /home/ansible/ansible/network.j2
+      dest: /home/ansible/network.txt
