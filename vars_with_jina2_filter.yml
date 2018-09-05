@@ -1,0 +1,15 @@
+--- # this yml file displays the usage of variables with jinja2 filter. This file assumes that you have defined a group: labservers in inventory
+- hosts: all
+  become: yes
+  become_method: sudo
+  vars:
+    inv_file: /home/ansible/myservers.txt
+  tasks:
+  - name: create a file
+    file:
+      path: "{{ inv_file }}"
+      state: touch
+  - name: Edit my inventory file using jinja2 filter
+    lineinfile:
+      path: "{{ inv_file }}"
+      line: "{{ groups[ 'labservers' ]|join(' ') }}"
