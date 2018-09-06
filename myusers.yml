@@ -1,0 +1,18 @@
+--- # this yml file creates a file using users.lst file as a variable file. To run this playbook: ansible-playbook myusers.yml -e "@users.lst"
+- hosts: all
+  become: yes
+  become_method: sudo
+  vars:
+  - users_file: /home/ansible/users.list
+  tasks:
+  - name: create a file
+    file:
+      path: "{{ users_file }}"
+      state: touch
+  - name: use lineinfile module to populate the above file
+    lineinfile:
+      path: "{{ users_file }}"
+      line: "{{ item }}"
+    with_items:
+    - "{{ staff }}"
+    - "{{ faculty }}"
